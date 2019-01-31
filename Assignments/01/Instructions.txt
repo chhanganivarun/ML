@@ -1,0 +1,28 @@
+Dear students,
+
+Assignment-1 Problem Statement:
+Implement K-NN classifier for the following datasets. 
+Find the best K value and p value for the Minkowski distance metric as discussed in class (using r fold cross validation; you are free to choose the r value). 
+
+Two students can form a group and work. Groups should be formed in such a way that average CGPA of all groups are approximately similar. An intelligent student can mix with a dull student. Two average students can form a group. 
+
+Datasets:
+1. Wheat Seeds Dataset (Please click on this link to know more about the dataset).
+http://archive.ics.uci.edu/ml/datasets/seeds
+
+2. Optical Recognition of Handwritten Digits Data Set (Please click on this link to know more about the dataset).
+https://archive.ics.uci.edu/ml/datasets/optical+recognition+of+handwritten+digits
+
+Please note the following:
+
+1. Source code should be written in ANSI C and also make sure that the code is not hard-coded (should not contain data specifics; instead keep data specifics in a meta-data file and read from it). It is expected that you will write the program in modular format whereby it becomes easy to read. You should indent and write appropriately comments.
+ 
+2. Please attach a report along with source code, input files; all in a compressed folder. The report should contain the glimpse of your understanding of the concept besides the results.
+
+3. Submit the assignment by  email to the TA shabbeer.sh@iiits.in. Please make sure that the subject should be "Machine Learning Assignment-1"  The content (body) of the mail should include your roll numbers and names.
+
+3. You will have to attend the evaluation session on a prescribed date for the assessment. Please note that the students who fail to attend will be awarded zero marks for the whole assignment.
+
+4.  Plagiarism will be checked and will attract negative marks depending on the amount of plagiarized content.
+
+Deadline for submission :  29th (Tuesday) Jan 2018   5pm.
