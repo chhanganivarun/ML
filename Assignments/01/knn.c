@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<time.h>
 
-#include"seeds_header.h"	//It has all the functions coressponding to the dataset.
+#include"knn_header.h"	//It has all the functions coressponding to the dataset.
 
 int main()
 {
@@ -64,5 +64,5 @@ int main()
 	p = minp+1;
 
 	printf("Best value of k %lld and p %lld\nAccuracy:%f%%\n",k,p,100-errorMat[k-1][p-1]*100);
-	// fclose(datain);
+	fclose(datain);
 }

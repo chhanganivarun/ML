@@ -1,5 +1,5 @@
-#ifndef seeds_header
-#define seeds_header
+#ifndef knn_header
+#define knn_header
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -7,11 +7,11 @@
 #include <math.h>
 #include <string.h>
 #include <time.h>
-#include "seed_metadata.h"
+#include "metadata.h"
 
 #define Kmax 10
 #define Pmax 10
-#define R 4
+#define R 5
 
 typedef struct {
 	float attributes[attrno];
