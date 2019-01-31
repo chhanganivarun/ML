@@ -1,4 +1,0 @@
-struct metadata{
-	char filename[80];
-	int datasize;
-}md("seeds_dataset.txt",210);

@@ -30,29 +30,20 @@ int main()
 		printf("Not Enough data\n");
 		return 0;
 	}
-	shuffle(data,datasize,sizeof(data[0]));
-
-	featureVector fv;
-
+	shuffle(data,datasize,sizeof(data[0]));	//shuffle the input dataset
 
 	float errorMat[Kmax][Pmax];
 	long long k,p;
-	/*
-	for (size_t i = 0; i < datasize; i++)
-	{
-		printfv(data[i]);
-		printf("\n");
-	}
-	*/
+
 	int mink=0,minp=0;
 	printf("kNN and r-fold cross validation started\n" );
 	for(int i=1;i<=Kmax;i++)
 	{
 		for(int j=1;j<=Pmax;j++)
 		{
-			errorMat[i-1][j-1] = getError(datasize,data,i,j);
+			errorMat[i-1][j-1] = getError(datasize,data,i,j);	//get error for i as k and j as p
 			printf("%f ", errorMat[i-1][j-1]);
-			if(errorMat[i-1][j-1]<errorMat[mink][minp])
+			if(errorMat[i-1][j-1]<errorMat[mink][minp]) //Find minimum error
 			{
 				mink=i-1;
 				minp=j-1;
@@ -64,5 +55,7 @@ int main()
 	p = minp+1;
 
 	printf("Best value of k %lld and p %lld\nAccuracy:%f%%\n",k,p,100-errorMat[k-1][p-1]*100);
+
+	fflush(datain);
 	fclose(datain);
 }

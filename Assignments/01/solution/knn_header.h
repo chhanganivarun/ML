@@ -11,7 +11,7 @@
 
 #define Kmax 10
 #define Pmax 10
-#define R 5
+#define R 10
 
 typedef struct {
 	float attributes[attrno];
@@ -22,6 +22,22 @@ typedef struct {
 long getMinClass(long datasize,double distance[datasize],featureVector data[datasize],int class,long k);
 long readData(FILE *instream,long datasetSize,featureVector data[datasetSize]);
 
+long reachEOF(FILE *instream)
+{
+	long i;
+	size_t buffsize = 10000;
+	char *line = (char *)malloc(sizeof(char)*buffsize);
+	for(i=0;!feof(instream);i++)
+	{
+		getline(&line,&buffsize,instream);
+		featureVector *fv;
+		fv= malloc(sizeof(fv));
+		free(fv);
+	}
+	free(line);
+
+	return i;
+}
 
 long readData(FILE *instream,long datasetSize,featureVector data[datasetSize])
 {
@@ -43,7 +59,6 @@ long readData(FILE *instream,long datasetSize,featureVector data[datasetSize])
 			sscanf(token,"%f",&(fv->attributes[j]));
 			token = strtok(NULL,space);
 		}
-		// printf("%d %d\n",j,attrno );
 		sscanf(token,"%d",&(fv->class));
 
 		data[i] = *fv;
@@ -63,7 +78,7 @@ void printfv(featureVector fv)
 	printf("%d ",fv.class);
 }
 
-float distancefv(featureVector fv1,featureVector fv2, int p)
+float distancefv(featureVector fv1,featureVector fv2, int p)	//Minkowski Distance
 {
 	double ret=0;
 	for(int i=0;i<attrno;i++)
@@ -81,11 +96,11 @@ void shuffle(void *array, size_t n, size_t size) {
 	srand(time(0));
     if (n > 1) {
         size_t i;
-        for (i = 0; i < n - 1; ++i) {
+        for (i = 0; i < n - 1; i++) {
             size_t rnd = (size_t) rand();
             size_t j = i + rnd / (RAND_MAX / (n - i) + 1);
 
-            memcpy(tmp, arr + j * stride, size);
+            memcpy(tmp, arr + j * stride, size);	//swap the two positions
             memcpy(arr + j * stride, arr + i * stride, size);
             memcpy(arr + i * stride, tmp, size);
         }
@@ -95,7 +110,6 @@ void shuffle(void *array, size_t n, size_t size) {
 
 float getError(int datasize,featureVector data[datasize],long k,long p)
 {
-	//printf("For k %ld p %ld\n",k,p);
 	double err=0;
 	for(int i=0;i<R;i++)
 	{
@@ -108,36 +122,22 @@ float getError(int datasize,featureVector data[datasize],long k,long p)
 			{
 				distance[din]=100;
 			}
-			//printf("k %d p %d partition %d entry %d\n",k,p,i,j*R+i );
 			for(int pindex = 0 ; pindex < datasize ; pindex++)
 			{
-				//printf("distance for %d and %d\n",j*R+i,pindex);
-				//printfv(data[j*R+i]);
-				//printf(" and ");
-				//printfv(data[pindex]);
 				if(pindex>=i && !(pindex-i)%R)
 				{
-					distance[pindex]=2000000;
+					distance[pindex]=-1;	//set the value as -1 so that distance of same class doesn't get selected
 				}
 				else
 				{
 					distance[pindex]=distancefv(data[j*R+i],data[pindex],p);
 				}
-				//printf(": %f \n",distance[pindex] );
 			}
 			for(int ssindex=0;ssindex*R+i<datasize;ssindex++)
 			{
-				distance[ssindex*R+i]=2000000;
+				distance[ssindex*R+i]=-1;
 			}
-			/*
-			for(int distind=0;distind<datasize;distind++)
-			{
-				printf("%f ",distance[distind]);
-			}
-			printf("\n");
-			*/
 			long cnt = getMinClass(datasize,distance,data,data[j*R+i].class,k);
-			// printf("\ncnt %d\n",cnt );
 			inerr+=((k-cnt*1.0)/k);
 
 		}
@@ -154,16 +154,16 @@ long getMinClass(long datasize,double distance[datasize],featureVector data[data
 		long min = 0;
 		for(long i=0;i<datasize;i++)
 		{
-			if(distance[i]<distance[min])
+			if((distance[i]<distance[min]||distance[min]<0)&&distance[i]>=0)
 			{
 				min=i;
 			}
 		}
-		if(data[min].class==class&& distance[min]!=2000000)
+		if(data[min].class==class&& distance[min]!=-1)
 		{
 			ret++;
 		}
-		distance[min]=2000000;
+		distance[min]=-1;	// ignore the point that is already chosen
 	}
 	return ret;
 }
