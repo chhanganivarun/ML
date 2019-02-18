@@ -49,7 +49,7 @@ long readData(FILE *instream,long datasetSize,featureVector data[datasetSize])
 		getline(&line,&buffsize,instream);
 		featureVector *fv;
 		fv= malloc(sizeof(fv));
-		const char space[4]="\t\n ,";
+		const char space[5]="\t\n ,";
 		char *token;
 
 		token = strtok(line,space);
