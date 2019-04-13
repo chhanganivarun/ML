@@ -11,7 +11,7 @@
 
 #define Kmax 10
 #define Pmax 10
-#define R 10
+#define R 5
 
 typedef struct {
 	float attributes[attrno];

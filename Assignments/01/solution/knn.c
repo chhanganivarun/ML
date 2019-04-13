@@ -57,6 +57,6 @@ int main()
 	printf("Best value of k %lld and p %lld\nAccuracy:%f%%\n",k,p,100-errorMat[k-1][p-1]*100);
 
 	fflush(datain);
-	fclose(datain);
+	// fclose(datain);
 }
 
